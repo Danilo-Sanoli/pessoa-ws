@@ -26,7 +26,9 @@ public class PessoaController {
     @PostMapping(value = "/salvar", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
 	public Pessoa savePessoa(@RequestBody Pessoa pessoa) {
-		return repository.save(pessoa);
+    	if(repository.findByCpf(pessoa.getCpf()) != null)
+    		return repository.findByCpf(pessoa.getCpf());
+    	return repository.save(pessoa);
 	}
     
     @GetMapping(value = "/cpf/{cpf}")
